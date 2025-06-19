@@ -78,10 +78,8 @@ logs/
 transformers_cache/
 torch_cache/
 
-# Model files (if downloading large models)
-models/
-*.bin
-*.safetensors
+# Model files
+model/
 
 # Temporary files
 *.tmp
