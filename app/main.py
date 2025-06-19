@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.models.schemas import ReviewText, SentimentResponse
+from app.services.sentiment import analyze_sentiment
 
 # Create the FastAPI app instance
 app = FastAPI(
@@ -13,104 +15,6 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Adjust in production
     allow_credentials=True,
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -118,3 +22,9 @@ app.add_middleware(
 @app.get("/")
 async def root():
     return {"message": "Welcome to Amazon Review Analyzer API"}
+
+@app.post("/analyze/sentiment", response_model=SentimentResponse)
+async def sentiment_analysis(review: ReviewText):
+    """Analyze the sentiment of a review text."""
+    result = analyze_sentiment(review.text)
+    return result
